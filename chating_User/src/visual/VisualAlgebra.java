@@ -25,45 +25,45 @@ import model.Splitear;
  *
  * @author Braya
  */
-
 public class VisualAlgebra extends javax.swing.JFrame {
 
     /**
      * Creates new form VisualAlgebra
      */
     // arraylist de coef x, coef y y num
-        ArrayList<JTextField> text1 = new ArrayList();
-        ArrayList<JTextField> text2 = new ArrayList();
-        ArrayList<JTextField> text3 = new ArrayList();
-     // arraylist puntos que forman region y evaluacion de funcion objetivo   
-        ArrayList<JLabel> text4 = new ArrayList();
-        ArrayList<JLabel> text5 = new ArrayList();
-        ArrayList<JLabel> text6 = new ArrayList();
-        ArrayList<JLabel> text7 = new ArrayList();
+    ArrayList<JTextField> text1 = new ArrayList();
+    ArrayList<JTextField> text2 = new ArrayList();
+    ArrayList<JTextField> text3 = new ArrayList();
+    // arraylist puntos que forman region y evaluacion de funcion objetivo   
+    ArrayList<JLabel> text4 = new ArrayList();
+    ArrayList<JLabel> text5 = new ArrayList();
+    ArrayList<JLabel> text6 = new ArrayList();
+    ArrayList<JLabel> text7 = new ArrayList();
     // arraylist de opcion <,>...
-        ArrayList<JComboBox> electext = new ArrayList();
+    ArrayList<JComboBox> electext = new ArrayList();
     //min o max    
-        JComboBox jComboBox2;
+    JComboBox jComboBox2;
     //estos dos sepa la berga    
-        int x;
-        String hola;
+    int x;
+    String hola;
     // se invoca el modelo desde aqui para manejar cuando se toma la foto    
-        public Model model= new Model();
+    public Model model = new Model();
     //se guardan los puntos para mandarselos a la parte logica    
-        ArrayList<String> c = new ArrayList();
+    ArrayList<String> c = new ArrayList();
     //el string con los puntos y mamadas
-        String d;
+    String d;
     //string[] con los puntos
-        String[]puntos;
-        //string[] con los puntos evaluados
-        String[]evaluar;
+    String[] puntos;
+    //string[] con los puntos evaluados
+    String[] evaluar;
+
     public VisualAlgebra() {
         initComponents();
         setVisible(true);
         Vector v1 = new Vector();
         v1.add("MAX");
         v1.add("MIN");
-        jComboBox2=new JComboBox<>(v1);
+        jComboBox2 = new JComboBox<>(v1);
         jComboBox2.setBounds(80, 115, 100, 25);
         Recibir.add(jComboBox2);
     }
@@ -98,44 +98,82 @@ public class VisualAlgebra extends javax.swing.JFrame {
             Recibir_Cuadro.add(electext.get(i));
         }
     }
-    public void Llenar_puntos(String[] puntos)
-    {
+
+    public void Llenar_puntos(String[] puntos) {
 
         for (int i = 0; i < puntos.length; i++) {
             text4.add(new JLabel());
             text4.get(i).setBounds(50, 10 + 27 * i, 80, 25);
-            text4.get(i).setText((char)(64+(i+1))+"=");
+            text4.get(i).setText((char) (64 + (i + 1)) + "=");
             jPanel2.add(text4.get(i));
         }
-        for (int i = 1; i <  puntos.length; i++) {
+        for (int i = 1; i < puntos.length; i++) {
             text5.add(new JLabel());
-            text5.get(i-1).setBounds(80, 10 + 27 * (i-1), 200, 25);
-            text5.get(i-1).setText(puntos[i]);
-            jPanel2.add(text5.get(i-1));
+            text5.get(i - 1).setBounds(80, 10 + 27 * (i - 1), 200, 25);
+            text5.get(i - 1).setText(puntos[i]);
+            jPanel2.add(text5.get(i - 1));
         }
-      
+
     }
-   
-    public void Llenar_Evaluar(String[] evaluar)
-    {
+
+    public void Llenar_Evaluar(String[] evaluar) {
+        String res[]= new String[evaluar.length*2];
+        double numeros[] = new double[evaluar.length];
+        double resultado;
+        int k=0;
+        for (int i = 0; i < evaluar.length; i++) {
+            res = evaluar[i].split("=");
+            numeros[k]= Double.parseDouble(res[1]);
+            k++;
+        }
+        
+        hola = String.valueOf(jComboBox2.getSelectedItem());
+
+        if (hola == "MAX") {
+            resultado = numeros[0];
+            for (int i = 0; i < evaluar.length; i++) {
+                if(resultado>= numeros[i]){
+                    
+                }else{
+                    resultado=numeros[i];
+                    i=0;
+                }
+            }
+        }else{
+            resultado = numeros[0];
+            for (int i = 0; i < evaluar.length; i++) {
+                if(resultado>= numeros[i]){
+                    
+                }else{
+                    resultado=numeros[i];
+                    i=0;
+                }
+            }
+        }
         for (int i = 0; i < evaluar.length; i++) {
             text6.add(new JLabel());
             text6.get(i).setBounds(50, 10 + 27 * i, 80, 25);
-            text6.get(i).setText((char)(64+(i+1))+"=");
+            text6.get(i).setText((char) (64 + (i + 1)) + "=");
             jPanel3.add(text6.get(i));
         }
-        for (int i = 0; i <  evaluar.length; i++) {
+        int i=0;
+        for ( i = 0; i < evaluar.length; i++) {
             text7.add(new JLabel());
             text7.get(i).setBounds(80, 10 + 27 * (i), 2000, 25);
             text7.get(i).setText(evaluar[i]);
             jPanel3.add(text7.get(i));
         }
+        text7.add(new JLabel());
+        text7.get(i).setBounds(80, 10 + 27 * (i), 2000, 25);
+        text7.get(i).setText("El resultado de la funcion objetivo es z= " +resultado);
+        jPanel3.add(text7.get(i));
+        
     }
-    public void Poner_Imagen()
-    {
-        ImageIcon icon = new ImageIcon("C:\\Users\\Estudiantes\\Documents\\NetBeansProjects\\CAPITULO 3\\chating_User\\GraficaPRO.jpg");
-        Image scaleImage = icon.getImage().getScaledInstance(517, 401,Image.SCALE_DEFAULT);
-        Icon iconx= new ImageIcon(scaleImage) ;
+
+    public void Poner_Imagen() {
+        ImageIcon icon = new ImageIcon("C:\\Users\\estudiantes\\Documents\\Metodo-Grafico-master\\chating_Server\\src\\view\\GraficaPRO.jpg");
+        Image scaleImage = icon.getImage().getScaledInstance(517, 401, Image.SCALE_DEFAULT);
+        Icon iconx = new ImageIcon(scaleImage);
         foto_label.setIcon(iconx);
     }
 
@@ -149,16 +187,8 @@ public class VisualAlgebra extends javax.swing.JFrame {
     private void initComponents() {
 
         Dar = new javax.swing.JPanel();
-        funcion_objetivo_tittle = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jSeparator5 = new javax.swing.JSeparator();
-        jSeparator6 = new javax.swing.JSeparator();
         Puntos_que_forman_la_region_factible_tittle = new javax.swing.JLabel();
-        jSeparator7 = new javax.swing.JSeparator();
-        jSeparator8 = new javax.swing.JSeparator();
         Evaluacion_de_puntos_en_la_funcion_objetivo_tittle = new javax.swing.JLabel();
-        jSeparator9 = new javax.swing.JSeparator();
-        jSeparator10 = new javax.swing.JSeparator();
         valor_maximo_tittle = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         foto_label = new javax.swing.JLabel();
@@ -174,36 +204,31 @@ public class VisualAlgebra extends javax.swing.JFrame {
         coefX = new javax.swing.JTextField();
         coefY = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         No_Ecuaciones = new javax.swing.JTextField();
-        jSeparator1 = new javax.swing.JSeparator();
-        jSeparator2 = new javax.swing.JSeparator();
-        jSeparator3 = new javax.swing.JSeparator();
-        jSeparator4 = new javax.swing.JSeparator();
         Recibir_Cuadro = new javax.swing.JPanel();
         coefX_tittle = new javax.swing.JLabel();
         coefY_tittle = new javax.swing.JLabel();
         num_tittle = new javax.swing.JLabel();
         mostrar_resultados_button = new javax.swing.JButton();
         crear_campos_button = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        Dar.setBackground(new java.awt.Color(204, 204, 204));
         Dar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        funcion_objetivo_tittle.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        funcion_objetivo_tittle.setText("Funcion Objetivo");
+        Puntos_que_forman_la_region_factible_tittle.setBackground(new java.awt.Color(0, 0, 0));
+        Puntos_que_forman_la_region_factible_tittle.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        Puntos_que_forman_la_region_factible_tittle.setText("Puntos de interseccion");
 
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Evaluacion_de_puntos_en_la_funcion_objetivo_tittle.setBackground(new java.awt.Color(0, 0, 0));
+        Evaluacion_de_puntos_en_la_funcion_objetivo_tittle.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        Evaluacion_de_puntos_en_la_funcion_objetivo_tittle.setText("Puntos en la funcion objetivo");
 
-        Puntos_que_forman_la_region_factible_tittle.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        Puntos_que_forman_la_region_factible_tittle.setText("Puntos que forman la region factible");
-
-        Evaluacion_de_puntos_en_la_funcion_objetivo_tittle.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        Evaluacion_de_puntos_en_la_funcion_objetivo_tittle.setText("Evaluacion de puntos en la funcion objetivo");
-
-        valor_maximo_tittle.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        valor_maximo_tittle.setText("Valor Maximo");
+        valor_maximo_tittle.setBackground(new java.awt.Color(0, 0, 0));
+        valor_maximo_tittle.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        valor_maximo_tittle.setText("Grafica");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -213,7 +238,7 @@ public class VisualAlgebra extends javax.swing.JFrame {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(foto_label, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(foto_label, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 442, Short.MAX_VALUE)
         );
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -257,86 +282,63 @@ public class VisualAlgebra extends javax.swing.JFrame {
         Dar.setLayout(DarLayout);
         DarLayout.setHorizontalGroup(
             DarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator5)
-            .addComponent(jSeparator6)
-            .addComponent(jSeparator7)
-            .addComponent(jSeparator8)
-            .addComponent(jSeparator9)
-            .addComponent(jSeparator10)
             .addGroup(DarLayout.createSequentialGroup()
-                .addGap(201, 201, 201)
-                .addComponent(funcion_objetivo_tittle)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(DarLayout.createSequentialGroup()
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DarLayout.createSequentialGroup()
                 .addGroup(DarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(DarLayout.createSequentialGroup()
-                        .addGroup(DarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(DarLayout.createSequentialGroup()
-                                .addGap(151, 151, 151)
-                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(DarLayout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(Puntos_que_forman_la_region_factible_tittle))
-                            .addGroup(DarLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(Evaluacion_de_puntos_en_la_funcion_objetivo_tittle))
-                            .addGroup(DarLayout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(valor_maximo_tittle, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(23, 23, 23)
+                        .addComponent(Puntos_que_forman_la_region_factible_tittle))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(DarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(DarLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(DarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1)
-                            .addComponent(jScrollPane2))))
-                .addContainerGap())
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Evaluacion_de_puntos_en_la_funcion_objetivo_tittle)
+                        .addGap(132, 132, 132))
+                    .addGroup(DarLayout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(67, Short.MAX_VALUE))))
+            .addGroup(DarLayout.createSequentialGroup()
+                .addGap(339, 339, 339)
+                .addComponent(valor_maximo_tittle, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         DarLayout.setVerticalGroup(
             DarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(DarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(funcion_objetivo_tittle)
+                .addGroup(DarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Puntos_que_forman_la_region_factible_tittle)
+                    .addComponent(Evaluacion_de_puntos_en_la_funcion_objetivo_tittle))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2)
-                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(1, 1, 1)
-                .addComponent(Puntos_que_forman_la_region_factible_tittle)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(1, 1, 1)
-                .addComponent(Evaluacion_de_puntos_en_la_funcion_objetivo_tittle)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(DarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(valor_maximo_tittle, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(11, 11, 11)
-                .addComponent(jSeparator10, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
+        Recibir.setBackground(new java.awt.Color(204, 204, 204));
         Recibir.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jLabel1.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel1.setText("Funcion Objetivo");
 
+        jLabel2.setBackground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Coef x");
 
+        jLabel3.setBackground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Coef y");
 
-        jLabel4.setText("MAX o MIN");
+        jLabel4.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel4.setText("Maximizar o minimizar");
 
-        coefX.setText("50");
         coefX.setMinimumSize(new java.awt.Dimension(59, 20));
         coefX.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -344,21 +346,16 @@ public class VisualAlgebra extends javax.swing.JFrame {
             }
         });
 
-        coefY.setText("56");
-
+        jLabel5.setBackground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Digite N° de ecuaciones");
-
-        jLabel6.setText("N° :");
-
-        No_Ecuaciones.setText("3");
 
         Recibir_Cuadro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        coefX_tittle.setText("Coef X");
+        coefX_tittle.setText("X1");
 
-        coefY_tittle.setText("Coef y");
+        coefY_tittle.setText("X2");
 
-        num_tittle.setText("Num");
+        num_tittle.setText("Restricciones");
 
         mostrar_resultados_button.setText("Mostrar Resusltado");
         mostrar_resultados_button.addActionListener(new java.awt.event.ActionListener() {
@@ -374,14 +371,14 @@ public class VisualAlgebra extends javax.swing.JFrame {
             .addGroup(Recibir_CuadroLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(coefX_tittle)
-                .addGap(55, 55, 55)
+                .addGap(61, 61, 61)
                 .addGroup(Recibir_CuadroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Recibir_CuadroLayout.createSequentialGroup()
                         .addComponent(mostrar_resultados_button, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(162, Short.MAX_VALUE))
                     .addGroup(Recibir_CuadroLayout.createSequentialGroup()
                         .addComponent(coefY_tittle)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 168, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(num_tittle)
                         .addGap(49, 49, 49))))
         );
@@ -393,146 +390,133 @@ public class VisualAlgebra extends javax.swing.JFrame {
                     .addComponent(coefX_tittle)
                     .addComponent(coefY_tittle)
                     .addComponent(num_tittle))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 278, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 173, Short.MAX_VALUE)
                 .addComponent(mostrar_resultados_button, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        crear_campos_button.setText("Crear Campos");
+        crear_campos_button.setText("Ingresar ecuaciones");
         crear_campos_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 crear_campos_buttonActionPerformed(evt);
             }
         });
 
+        jLabel11.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel11.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabel11.setText("Maximiar y Minimizar Metodo grafico");
+
         javax.swing.GroupLayout RecibirLayout = new javax.swing.GroupLayout(Recibir);
         Recibir.setLayout(RecibirLayout);
         RecibirLayout.setHorizontalGroup(
             RecibirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator2)
-            .addComponent(jSeparator4)
-            .addComponent(jSeparator3)
-            .addComponent(jSeparator1)
             .addGroup(RecibirLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(RecibirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(RecibirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
-                    .addComponent(Recibir_Cuadro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
                     .addGroup(RecibirLayout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(jLabel6)
-                        .addGap(39, 39, 39)
-                        .addComponent(No_Ecuaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(crear_campos_button)
-                        .addGap(18, 18, 18))
-                    .addGroup(RecibirLayout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(39, 39, 39)
-                        .addComponent(coefY))
-                    .addGroup(RecibirLayout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
                         .addComponent(jLabel2)
-                        .addGap(39, 39, 39)
-                        .addComponent(coefX, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(coefX, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(coefY, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel11)
+                    .addGroup(RecibirLayout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(55, 55, 55)
+                        .addComponent(No_Ecuaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(51, 51, 51)
+                        .addComponent(crear_campos_button)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Recibir_Cuadro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         RecibirLayout.setVerticalGroup(
             RecibirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(RecibirLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(RecibirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(coefX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(RecibirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(coefY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel4)
-                .addGap(12, 12, 12)
-                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(1, 1, 1)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(RecibirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(No_Ecuaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(crear_campos_button, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Recibir_Cuadro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(291, 291, 291))
+                .addGroup(RecibirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(RecibirLayout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addGap(34, 34, 34)
+                        .addGroup(RecibirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(coefX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addComponent(coefY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(RecibirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(No_Ecuaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(crear_campos_button, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(RecibirLayout.createSequentialGroup()
+                        .addComponent(Recibir_Cuadro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Recibir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Dar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Recibir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Dar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(Recibir, javax.swing.GroupLayout.PREFERRED_SIZE, 774, Short.MAX_VALUE)
-                    .addComponent(Dar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(Recibir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Dar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void crear_campos_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crear_campos_buttonActionPerformed
-        if(Integer.parseInt(No_Ecuaciones.getText())>20)
-        {
+        if (Integer.parseInt(No_Ecuaciones.getText()) > 20) {
             JOptionPane.showMessageDialog(this, "menor que 20");
-        }
-        else
-        {
+        } else {
             Recibir.repaint();
-            x=Integer.parseInt(No_Ecuaciones.getText());
+            x = Integer.parseInt(No_Ecuaciones.getText());
             Llenar_ecuaciones();
         }
-        
+
     }//GEN-LAST:event_crear_campos_buttonActionPerformed
 
     private void mostrar_resultados_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrar_resultados_buttonActionPerformed
-       
+
         System.out.println(getX());
         hola = String.valueOf(jComboBox2.getSelectedItem());
-        c.add(coefX.getText()+","+coefY.getText()+","+hola);
+        c.add(coefX.getText() + "," + coefY.getText() + "," + hola);
         for (int i = 0; i < getX(); i++) {
             hola = String.valueOf(electext.get(i).getSelectedItem());
-            c.add(text1.get(i).getText()+","+text2.get(i).getText()+","+hola+","+text3.get(i).getText());
+            c.add(text1.get(i).getText() + "," + text2.get(i).getText() + "," + hola + "," + text3.get(i).getText());
         }
         c.add("0");
         model.setC(c);
-         try {
-             d=model.Connect();
-         } catch (InterruptedException ex) {
-             Logger.getLogger(VisualAlgebra.class.getName()).log(Level.SEVERE, null, ex);
-         }
-         Splitear split = new Splitear();
-         puntos=split.SplitearPuntos(d,0);
-         evaluar=split.SplitearPuntos(d,1);
-          Llenar_puntos(puntos);
-          Llenar_Evaluar(evaluar);
-          Poner_Imagen();
+        try {
+            d = model.Connect();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(VisualAlgebra.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Splitear split = new Splitear();
+        puntos = split.SplitearPuntos(d, 0);
+        evaluar = split.SplitearPuntos(d, 1);
+        Llenar_puntos(puntos);
+        Llenar_Evaluar(evaluar);
+        Poner_Imagen();
         Dar.repaint();
     }//GEN-LAST:event_mostrar_resultados_buttonActionPerformed
 
@@ -621,7 +605,6 @@ public class VisualAlgebra extends javax.swing.JFrame {
     }
 
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Dar;
     private javax.swing.JLabel Evaluacion_de_puntos_en_la_funcion_objetivo_tittle;
@@ -635,29 +618,17 @@ public class VisualAlgebra extends javax.swing.JFrame {
     private javax.swing.JLabel coefY_tittle;
     private javax.swing.JButton crear_campos_button;
     private javax.swing.JLabel foto_label;
-    private javax.swing.JLabel funcion_objetivo_tittle;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator10;
-    private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JSeparator jSeparator6;
-    private javax.swing.JSeparator jSeparator7;
-    private javax.swing.JSeparator jSeparator8;
-    private javax.swing.JSeparator jSeparator9;
     private javax.swing.JButton mostrar_resultados_button;
     private javax.swing.JLabel num_tittle;
     private javax.swing.JLabel valor_maximo_tittle;

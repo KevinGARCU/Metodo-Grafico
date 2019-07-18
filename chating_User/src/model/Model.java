@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package model;
 
 import java.awt.image.BufferedImage;
@@ -28,10 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
-/**
- *
- * @author Maria Fernanda
- */
+
 public class Model {
 
     public Scanner sc = new Scanner(System.in);
@@ -62,8 +55,8 @@ public class Model {
             ot = client.getOutputStream();
             s = new OutputStreamWriter(ot);
             salida = new PrintWriter(s,true);
-            System.out.println("Digitre un numero ya!");
-            System.out.println("-1 para terminar");
+           // System.out.println("Digite un numero ya!");
+            //System.out.println("-1 para terminar");
         } catch (IOException ex) {
             Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -113,7 +106,7 @@ public class Model {
                 buffOut.write(imgByte, 0, in);
             }
             
-            System.out.println("smile, is an order >:v");
+            //System.out.println("smile, is an order >:v");
             buffOut.close();
             dis.close();
 
